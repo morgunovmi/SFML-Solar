@@ -16,4 +16,4 @@ set(SFML_LIBS sfml-graphics sfml-system sfml-window)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SFML_LIBS})
 
-target_include_directories(${PROJECT_NAME} PRIVATE "include") 
+target_include_directories(${PROJECT_NAME} PRIVATE "include" "dependencies") 
