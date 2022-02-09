@@ -32,6 +32,9 @@ struct Vec2 {
     }
 };
 
+template <typename T>
+Vec2<T> operator*(float f, Vec2<T> vec) { return Vec2<T>{ static_cast<T>(vec.x*f), static_cast<T>(vec.y*f) }; }
+
 template <class T>
 struct Vec3 {
     T x, y, z;
@@ -53,9 +56,10 @@ struct Vec3 {
     Vec3<T> operator+(const Vec3<T>& v) const { return Vec3<T>{ x+v.x, y+v.y, z+v.z }; }
     Vec3<T> operator-(const Vec3<T>& v) const { return Vec3<T>{ x-v.x, y-v.y, z-v.z }; }
     Vec3<T> operator*(float f)          const { return Vec3<T>{ static_cast<T>(x*f), static_cast<T>(y*f), static_cast<T>(z*f) }; }
-    T       operator*(const Vec3<T>& v) const { return x*v.x + y*v.y + z*v.z; }
+    Vec3<T> operator/(float f)          const { return Vec3<T>{ static_cast<T>(x/f), static_cast<T>(y/f), static_cast<T>(z/f) }; }
+    T       operator*(const Vec3<T>& v) const { return x * v.x + y * v.y + z * v.z; }
 
-    [[nodiscard]] float norm () const { return std::sqrt(x*x+y*y+z*z); }
+    [[nodiscard]] float norm () const { return std::sqrt(x*x + y*y + z*z); }
     [[nodiscard]] Vec3<T> & normalize(T l=1) { *this = (*this) * l * Q_rsqrt(x*x + y*y + z*z); return *this; }
 
     friend std::ostream& operator<<(std::ostream& s, Vec3<T>& v) {
@@ -63,6 +67,9 @@ struct Vec3 {
         return s;
     }
 };
+
+template <typename T>
+Vec3<T> operator*(float f, Vec3<T> vec) { return Vec3<T>{ static_cast<T>(vec.x*f), static_cast<T>(vec.y*f), static_cast<T>(vec.z*f) }; }
 
 using Vec2f = Vec2<float>;
 using Vec2i = Vec2<int>;
@@ -87,7 +94,6 @@ public:
 
     static Matrix eye(int size);
     Matrix transpose();
-//    Matrix inverse();
 
     friend std::ostream& operator<<(std::ostream& s, const Matrix& m);
 

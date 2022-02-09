@@ -11,9 +11,10 @@ add_executable(${PROJECT_NAME} "")
 add_subdirectory(src include)
 
 find_package(SFML 2 REQUIRED COMPONENTS graphics system window)
+find_package(fmt)
 
 set(SFML_LIBS sfml-graphics sfml-system sfml-window)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ${SFML_LIBS})
+target_link_libraries(${PROJECT_NAME} PUBLIC ${SFML_LIBS} fmt::fmt)
 
 target_include_directories(${PROJECT_NAME} PRIVATE "include" "dependencies") 
