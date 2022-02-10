@@ -1,4 +1,6 @@
+#include <cstddef>
 #include <cstdint>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -12,7 +14,7 @@ class Solar {
             mWindow(sf::VideoMode{ width, height }, "Solar System", sf::Style::Close,
                     sf::ContextSettings(0, 0, 8, 2, 0)),
             mView(sf::FloatRect{ 0, 0, static_cast<float>(width), static_cast<float>(height) }),
-            mDeltaClock(), mWorld(Vec3f{ 0, 98.1, 0 }) {
+            mDeltaClock(), mWorld(Vec3f{ 0, 98.1, 0 }), mZoomLevel(1.f) {
                 Initialize();
             }
 
@@ -32,8 +34,15 @@ class Solar {
         sf::View            mView;
 
         sf::Clock           mDeltaClock;
+        float               mDeltaSeconds;
+        
         PhysicsWorld        mWorld;
+        std::vector<sf::Vertex> mTrailsPoints;
+
+        sf::Font            mDebugFont;
+        sf::Text            mDebugText;
 
         const float         VIEW_MOVE_AMOUNT = 10.f;
         const float         VIEW_ZOOM_FACTOR = 1.2f;
+        float               mZoomLevel;
 };
