@@ -27,7 +27,7 @@ void Solar::Initialize() {
     mDebugText.setPosition(mWindowWidth - 200.f, 10.f);
 
     mWindow.setFramerateLimit(60);
-    for (size_t i = 0; i < 100; i++) {
+    for (size_t i = 0; i < 10; i++) {
         mWorld.AddObject(std::make_unique<Object>(Vec3f(rand() %10000, 0, 0), Vec3f(0, rand()%500, 0), 10000));
     }
 }
@@ -100,8 +100,8 @@ void Solar::Render() {
     mWindow.draw(sun); 
 
     for (auto & obj : mWorld.GetObjects()) {
- //       fmt::print("x : {}, y : {}\n", obj->GetPosition().x, obj->GetPosition().y);
-//        fmt::print("vx : {}, vy : {}\n", obj->GetVelocity().x, obj->GetVelocity().y);
+        //fmt::print("x : {}, y : {}\n", obj->GetPosition().x, obj->GetPosition().y);
+        //fmt::print("vx : {}, vy : {}\n", obj->GetVelocity().x, obj->GetVelocity().y);
 
         sf::CircleShape c{ 100.f, 100 };
         c.setOrigin(c.getRadius(), c.getRadius());
