@@ -40,7 +40,7 @@ template<>
     }
 
     std::vector<float>& Matrix::operator[](std::size_t i) {
-        assert(i >= 0 && i < mRows);
+        assert(i < mRows);
         return mMatrix[i];
     }
 

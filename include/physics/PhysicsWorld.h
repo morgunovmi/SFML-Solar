@@ -29,6 +29,8 @@ namespace slr {
     private:
         std::unordered_set<ObjectPtr> mObjects;
         Vec3f mGravity;
+
+        [[nodiscard]] Vec3f GetNetForce(const ObjectPtr& obj);
     };
 }
 

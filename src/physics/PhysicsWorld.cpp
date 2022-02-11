@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "physics/PhysicsWorld.h"
+#include "physics/RKSolver.h"
 
 namespace slr {
     void PhysicsWorld::CreateObject(ObjectPtr object) {
@@ -23,15 +24,27 @@ namespace slr {
         return -gamma * m1 * m2 * (pos1 - pos2) / std::pow((pos1 - pos2).norm(), 3);
     }
 
+    Vec3f PhysicsWorld::GetNetForce(const ObjectPtr& obj) {
+        Vec3f netForce{};
+        for (auto& obj1: mObjects) {
+            if (obj != obj1) {
+                netForce = netForce + GetNBodyGravForce(obj->GetMass(), obj1->GetMass(),
+                                               obj->GetPosition(), obj1->GetPosition());
+            }
+        }
+        return netForce;
+    }
+
     void PhysicsWorld::Step(float dt) {
         for (auto& obj: mObjects) {
-            for (auto& obj1: mObjects) {
-                if (obj != obj1) {
-                    obj->SetForce(obj->GetForce() + GetNBodyGravForce(obj->GetMass(), obj1->GetMass(),
-                                                                      obj->GetPosition(), obj1->GetPosition()));
-                }
-            }
-            //obj->SetForce(obj->GetForce() + mGravity * obj->GetMass());
+            const auto netForce = GetNetForce(obj);
+            std::array<float, 4> init = {obj->GetPosition().x, obj->GetVelocity().x, obj->GetPosition().y, obj->GetVelocity().y};
+            auto dxdy = [&](auto init){ return std::array<float, 4>{init[1], netForce.x / obj->GetMass(), init[3], netForce.y / obj->GetMass()};};
+
+            const auto res =  RKSolver<2, decltype(dxdy)>::Solve(init, dt, dxdy);
+
+            obj->SetVelocity(Vec3f{ res[1], res[3], 0});
+            obj->SetPosition(Vec3f{ res[0], res[2], 0});
 
             obj->SetVelocity(obj->GetVelocity() + obj->GetForce() / obj->GetMass() * dt);
             obj->SetPosition(obj->GetPosition() + obj->GetVelocity() * dt);

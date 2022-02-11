@@ -73,9 +73,6 @@ namespace slr {
         mWindow.draw(sun);
 
         for (auto& obj: mWorld.GetObjects()) {
-            //fmt::print("x : {}, y : {}\n", obj->GetPosition().x, obj->GetPosition().y);
-            //fmt::print("vx : {}, vy : {}\n", obj->GetVelocity().x, obj->GetVelocity().y);
-
             sf::CircleShape c{100.f, 100};
             c.setOrigin(c.getRadius(), c.getRadius());
             c.setPosition(sf::Vector2f{obj->GetPosition().x, obj->GetPosition().y});
