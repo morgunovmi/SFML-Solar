@@ -14,11 +14,10 @@ class Solar {
             mWindow(sf::VideoMode{ width, height }, "Solar System", sf::Style::Close,
                     sf::ContextSettings(0, 0, 8, 2, 0)),
             mView(sf::FloatRect{ 0, 0, static_cast<float>(width), static_cast<float>(height) }),
-            mDeltaClock(), mWorld(Vec3f{ 0, 98.1, 0 }), mZoomLevel(1.f) {
+            mDeltaClock(), mWorld(Vec3f{ 0, 98.1f, 0 }),
+            mTrailsPoints(), mDebugFont(), mDebugText(), mZoomLevel(1.f) {
                 Initialize();
             }
-
-        ~Solar() noexcept = default;
 
         void Run();
 
@@ -34,7 +33,7 @@ class Solar {
         sf::View            mView;
 
         sf::Clock           mDeltaClock;
-        float               mDeltaSeconds;
+        float               mDeltaSeconds{};
         
         PhysicsWorld        mWorld;
         std::vector<sf::Vertex> mTrailsPoints;

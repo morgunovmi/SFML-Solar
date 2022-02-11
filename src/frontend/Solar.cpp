@@ -1,9 +1,7 @@
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <iostream>
 #include <string>
 #include <fmt/format.h>
-#include <fmt/ostream.h>
-#include <array>
+
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "frontend/Solar.h"
 
@@ -16,7 +14,7 @@ void Solar::Run() {
 }
 
 void Solar::Initialize() {
-    std::string fontPath{ "../resources/fonts/arvo.ttf" };
+    const std::string fontPath{ "../resources/fonts/arvo.ttf" };
 
     mDebugFont.loadFromFile(fontPath);
 
@@ -24,16 +22,16 @@ void Solar::Initialize() {
     mDebugText.setCharacterSize(20U);
     mDebugText.setFillColor(sf::Color::Red);
 
-    mDebugText.setPosition(mWindowWidth - 200.f, 10.f);
+    mDebugText.setPosition(static_cast<float>(mWindowWidth) - 200.f, 10.f);
 
     mWindow.setFramerateLimit(60);
     for (size_t i = 0; i < 10; i++) {
-        mWorld.AddObject(std::make_unique<Object>(Vec3f(rand() %10000, 0, 0), Vec3f(0, rand()%500, 0), 10000));
+        mWorld.CreateObject(std::make_unique<Object>(Vec3f(rand() % 10000, 0, 0), Vec3f(0, rand() % 500, 0), 10000));
     }
 }
 
 void Solar::Review() {
-    sf::Event event;
+    sf::Event event{};
 
     while (mWindow.pollEvent(event)) {
         switch (event.type) {

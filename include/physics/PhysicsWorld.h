@@ -6,14 +6,12 @@
 
 class PhysicsWorld {
     public:
-        PhysicsWorld(const Vec3f& gravity) : mObjects(), mGravity(gravity) { } 
+        explicit PhysicsWorld(const Vec3f& gravity) : mObjects(), mGravity(gravity) { }
 
-        ~PhysicsWorld() noexcept = default;
-
-        void AddObject(std::unique_ptr<Object> object);
+        void CreateObject(std::unique_ptr<Object> object);
         void DeleteObject(std::unique_ptr<Object> object);
 
-        Vec3f GetGravity() const { return mGravity; }
+        [[nodiscard]] Vec3f GetGravity() const { return mGravity; }
         void SetGravity(const Vec3f& vec) { mGravity = vec; }
 
         void Step(float dt);

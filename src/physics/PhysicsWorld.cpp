@@ -3,7 +3,7 @@
 
 #include "physics/PhysicsWorld.h"
 
-void PhysicsWorld::AddObject(std::unique_ptr<Object> object) {
+void PhysicsWorld::CreateObject(std::unique_ptr<Object> object) {
     mObjects.insert(std::move(object));
 }
 
@@ -11,19 +11,16 @@ void PhysicsWorld::DeleteObject(std::unique_ptr<Object> object) {
     mObjects.erase(object);
 }
 
-Vec3f GetGravitationalForce(float mass, Vec3f position) {
+Vec3f GetGravitationalForce(float mass, const Vec3f& position) {
     const auto gamma = 1e8f; 
 
     return -gamma * mass * position / std::pow(position.norm(), 3); 
 }
 
-Vec3f GetNBodyGravForce(float m1, float m2, Vec3f pos1, Vec3f pos2) {
+Vec3f GetNBodyGravForce(float m1, float m2, const Vec3f& pos1, const Vec3f& pos2) {
     const auto gamma = 1e4f; 
 
-    const auto norm = (pos1 - pos2).norm();
-    fmt::print("Norm: {}\n", norm); 
-
-    return -gamma * m1 * m2 * (pos1 - pos2) / std::pow((pos1 - pos2).norm(), 3); 
+    return -gamma * m1 * m2 * (pos1 - pos2) / std::pow((pos1 - pos2).norm(), 3);
 }
 
 void PhysicsWorld::Step(float dt) {

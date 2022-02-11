@@ -1,13 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window/Keyboard.hpp>
+#include "frontend/Solar.h"
 
-#include "frontend/Solar.h" 
-int main(int argc, char **argv) {
+int main() {
     const auto width = 800;
     const auto height = 600;
 
     Solar system{ width, height };
     system.Run();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
