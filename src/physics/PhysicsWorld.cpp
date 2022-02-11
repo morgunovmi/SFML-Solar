@@ -1,13 +1,12 @@
 #include <cmath>
-#include <fmt/format.h>
 
 #include "physics/PhysicsWorld.h"
 
-void PhysicsWorld::CreateObject(std::unique_ptr<Object> object) {
+void PhysicsWorld::CreateObject(ObjectPtr object) {
     mObjects.insert(std::move(object));
 }
 
-void PhysicsWorld::DeleteObject(std::unique_ptr<Object> object) {
+void PhysicsWorld::DeleteObject(ObjectPtr object) {
     mObjects.erase(object);
 }
 
