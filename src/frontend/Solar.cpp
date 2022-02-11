@@ -60,12 +60,11 @@ namespace slr {
     void Solar::Update() {
         mDeltaSeconds = mDeltaClock.restart().asSeconds();
         mWorld.Step(mDeltaSeconds);
-        mView.Update();
+        mView.Update(mDeltaSeconds);
     }
 
     void Solar::Render() {
         mWindow.clear(sf::Color::White);
-        fmt::print("x size : {}, y size {}\n", mView.getSize().x, mView.getSize().y);
 
         sf::CircleShape sun{100.f, 100};
         sun.setOrigin(sun.getRadius(), sun.getRadius());

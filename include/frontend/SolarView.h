@@ -4,8 +4,10 @@
 #include <SFML/Graphics.hpp>
 
 namespace slr {
-    const float VIEW_MOVE_AMOUNT = 10.f;
-    const float VIEW_ZOOM_FACTOR = 1.2f;
+    const float VIEW_ACCEL_AMOUNT = 25.f;
+    const float VIEW_DAMP_FACTOR = 0.96f;
+    const float VIEW_SPEED_CAP = 800.f;
+    const float VIEW_ZOOM_FACTOR = 1.1f;
 
     class SolarView : public sf::View {
     public:
@@ -13,7 +15,7 @@ namespace slr {
                 sf::View(sf::FloatRect{0, 0, width, height}),
                 mMoveVelocity(), mZoomSpeed(), mZoomLevel(1.f) {}
 
-        void Update();
+        void Update(float dt);
 
         float GetZoomLevel() const {
             return mZoomLevel;
@@ -27,15 +29,15 @@ namespace slr {
             return mZoomSpeed;
         }
 
-        void SetMMoveVelocity(const sf::Vector2f& moveVelocity) {
+        void SetMoveVelocity(const sf::Vector2f& moveVelocity) {
             SolarView::mMoveVelocity = moveVelocity;
         }
 
-        void SetMZoomSpeed(float zoomSpeed) {
+        void SetZoomSpeed(float zoomSpeed) {
             SolarView::mZoomSpeed = zoomSpeed;
         }
 
-        void SetMZoomLevel(float zoomLevel) {
+        void SetZoomLevel(float zoomLevel) {
             SolarView::mZoomLevel = zoomLevel;
         }
 

@@ -1,14 +1,21 @@
 #ifndef MYRENDERER_GEOMETRY_H
 #define MYRENDERER_GEOMETRY_H
 
+#include <cmath>
 #include <iostream>
 #include <cassert>
 #include <cmath>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 #include "fisqrt.h"
 
 namespace slr {
+    float norm(const sf::Vector2f& vec);
+
+    template <typename T>
+    T clip(const T& n, const T& lower, const T& upper);
+
     template<class T>
     struct Vec2 {
         T x, y;

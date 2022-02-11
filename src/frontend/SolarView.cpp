@@ -1,18 +1,23 @@
+#include <fmt/format.h>
+
 #include "frontend/SolarView.h"
+#include "math/math.h"
 
 namespace slr {
-    void SolarView::Update() {
+    void SolarView::Update(float dt) {
+        sf::Vector2f acceleration{};
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            move(sf::Vector2f{-VIEW_MOVE_AMOUNT * mZoomLevel, 0.0f});
+            acceleration.x -= VIEW_ACCEL_AMOUNT * mZoomLevel;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            move(sf::Vector2f{VIEW_MOVE_AMOUNT * mZoomLevel, 0.0f});
+            acceleration.x += VIEW_ACCEL_AMOUNT * mZoomLevel;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            move(sf::Vector2f{0.0f, -VIEW_MOVE_AMOUNT * mZoomLevel});
+            acceleration.y -= VIEW_ACCEL_AMOUNT * mZoomLevel;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            move(sf::Vector2f{0.0f, VIEW_MOVE_AMOUNT * mZoomLevel});
+            acceleration.y += VIEW_ACCEL_AMOUNT * mZoomLevel;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
             zoom(VIEW_ZOOM_FACTOR);
@@ -22,5 +27,17 @@ namespace slr {
             zoom(1.0f / VIEW_ZOOM_FACTOR);
             mZoomLevel /= VIEW_ZOOM_FACTOR;
         }
+
+        mMoveVelocity += acceleration;
+
+        const auto fracOfMaxSpeed = norm(mMoveVelocity) / (VIEW_SPEED_CAP * mZoomLevel);
+
+        if (fracOfMaxSpeed > 1) {
+            mMoveVelocity /= fracOfMaxSpeed;
+        }
+        move(mMoveVelocity * dt);
+
+        fmt::print("{}\n", norm(mMoveVelocity));
+        mMoveVelocity *= VIEW_DAMP_FACTOR;
     }
 }

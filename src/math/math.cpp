@@ -1,7 +1,16 @@
 #include "math/math.h"
 
 namespace slr {
-    template<>
+    float norm(const sf::Vector2f& vec) {
+        return std::sqrt(vec.x * vec.x + vec.y * vec.y);
+    }
+
+    template <typename T>
+    T clip(const T& n, const T& lower, const T& upper) {
+        return std::max(lower, std::min(n, upper));
+    }
+
+template<>
     template<>
     Vec3<int>::Vec3(const Vec3<float>& v) : x(static_cast<int>(v.x + .5)),
                                             y(static_cast<int>(v.y + .5)),
