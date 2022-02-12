@@ -49,7 +49,7 @@ namespace slr {
 
         std::random_device mRd;
         std::default_random_engine mDre{ mRd() };
-        std::uniform_real_distribution<float> mPosDistr{-10000.f, 10000.f};
+        std::uniform_real_distribution<float> mPosDistr{-1000.f, 1000.f};
         std::uniform_real_distribution<float> mSpeedDistr{-300.f, 300.f};
         std::uniform_real_distribution<float> mMassDistr{5000.f, 15000.f};
 

@@ -6,8 +6,8 @@
 template<int Dim>
 class ExplEulerSolver : public Solver<Dim> {
 public:
-    static constexpr stateArray<Dim> Solve(const stateArray <Dim>& init, float dt, auto rhsFunc) {
-        const auto k = rhsFunc(init);
+    [[nodiscard]] static constexpr stateArray<Dim> Solve(float t, const stateArray <Dim>& init, float dt, auto rhsFunc) {
+        const auto k = rhsFunc(t, init);
 
         stateArray<Dim> res{};
         std::transform(begin(init), end(init), begin(k), begin(res),

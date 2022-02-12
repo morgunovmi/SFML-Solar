@@ -9,31 +9,31 @@
 template<int Dim>
 class RKSolver : public Solver<Dim> {
 public:
-    static constexpr stateArray<Dim> Solve(const stateArray<Dim>& init, float dt, auto rhsFunc)  {
+    [[nodiscard]] static constexpr stateArray<Dim> Solve(float t, const stateArray<Dim>& init, float dt, auto rhsFunc)  {
         std::array<std::array<float, Dim * 2>, 4> koeffs{};
 
         // k1
-        koeffs[0] = rhsFunc(init);
+        koeffs[0] = rhsFunc(t, init);
 
         // k2
         std::array<float, Dim * 2> init1{};
         std::transform(begin(init), end(init), begin(koeffs[0]), begin(init1),
                        [=](auto lhs, auto rhs){ return lhs + dt / 2 * rhs; });
-        koeffs[1] = rhsFunc(init1);
+        koeffs[1] = rhsFunc(t, init1);
         std::transform(begin(koeffs[1]), end(koeffs[1]), begin(koeffs[1]), [](auto val){ return 2 * val; });
 
         //k3
         std::array<float, Dim * 2> init2{};
         std::transform(begin(init), end(init), begin(koeffs[1]), begin(init2),
                        [=](auto lhs, auto rhs){ return lhs + dt / 2 * rhs; });
-        koeffs[2] = rhsFunc(init2);
+        koeffs[2] = rhsFunc(t, init2);
         std::transform(begin(koeffs[2]), end(koeffs[2]), begin(koeffs[2]), [](auto val){ return 2 * val; });
 
         //k4
         std::array<float, Dim * 2> init3{};
         std::transform(begin(init), end(init), begin(koeffs[2]), begin(init3),
                        [=](auto lhs, auto rhs){ return lhs + dt * rhs; });
-        koeffs[3] = rhsFunc(init3);
+        koeffs[3] = rhsFunc(t, init3);
 
         std::array<float, Dim * 2> ret{};
         for (size_t i = 0; i < Dim * 2; i++) {

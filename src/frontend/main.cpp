@@ -1,6 +1,9 @@
 #include "frontend/Solar.h"
+#include "physics/SolverTest.h"
 
 int main() {
+    TestSolvers();
+
     const auto width = 800;
     const auto height = 600;
 

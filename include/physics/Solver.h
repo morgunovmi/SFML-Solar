@@ -13,7 +13,7 @@ public:
 
     virtual ~Solver() = default;
 
-    static constexpr stateArray<Dim> Solve(const stateArray<Dim>& init, float dt, auto func) {}
+    [[nodiscard]] static constexpr stateArray<Dim> Solve(float t, const stateArray<Dim>& init, float dt, auto func) {}
 };
 
 #endif //SOLAR_SOLVER_H

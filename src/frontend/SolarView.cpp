@@ -37,7 +37,6 @@ namespace slr {
         }
         move(mMoveVelocity * dt);
 
-        fmt::print("{}\n", norm(mMoveVelocity));
         mMoveVelocity *= VIEW_DAMP_FACTOR;
     }
 }

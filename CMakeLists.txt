@@ -11,10 +11,13 @@ add_executable(${PROJECT_NAME} "")
 add_subdirectory(src include)
 
 find_package(SFML 2 REQUIRED COMPONENTS graphics system window)
-find_package(fmt)
+find_package(fmt REQUIRED)
+find_package(xtl REQUIRED)
+find_package(xtensor REQUIRED)
+find_package(sciplot REQUIRED)
 
 set(SFML_LIBS sfml-graphics sfml-system sfml-window)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ${SFML_LIBS} fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${SFML_LIBS} fmt::fmt xtensor xtensor::optimize sciplot::sciplot)
 
 target_include_directories(${PROJECT_NAME} PRIVATE "include" "dependencies") 
