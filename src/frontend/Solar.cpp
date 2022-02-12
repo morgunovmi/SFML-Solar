@@ -28,7 +28,9 @@ namespace slr {
         mWindow.setFramerateLimit(60);
         for (size_t i = 0; i < 10; i++) {
             mWorld.CreateObject(
-                    std::make_unique<Object>(Vec3f(rand() % 10000, 0, 0), Vec3f(0, rand() % 500, 0), 10000));
+                    std::make_unique<Object>(Vec3f(mPosDistr(mDre), mPosDistr(mDre), 0),
+                                             Vec3f(mSpeedDistr(mDre), mSpeedDistr(mDre), 0),
+                                             mMassDistr(mDre)));
         }
     }
 

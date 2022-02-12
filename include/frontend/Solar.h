@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <vector>
+#include <random>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -20,7 +21,7 @@ namespace slr {
                 mWindow(sf::VideoMode{width, height}, "Solar System", sf::Style::Close,
                         sf::ContextSettings(0, 0, 8, 2, 0)),
                 mView(width, height),
-                mDeltaClock(), mWorld(Vec3f{0, 98.1f, 0}),
+                mDeltaClock(), mDeltaSeconds(), mWorld(Vec3f{0, 98.1f, 0}),
                 mTrailsPoints(), mDebugFont(), mDebugText() {
             Initialize();
         }
@@ -41,10 +42,16 @@ namespace slr {
         SolarView mView;
 
         sf::Clock mDeltaClock;
-        float mDeltaSeconds{};
+        float mDeltaSeconds;
 
         PhysicsWorld mWorld;
         std::vector<sf::Vertex> mTrailsPoints;
+
+        std::random_device mRd;
+        std::default_random_engine mDre{ mRd() };
+        std::uniform_real_distribution<float> mPosDistr{-10000.f, 10000.f};
+        std::uniform_real_distribution<float> mSpeedDistr{-300.f, 300.f};
+        std::uniform_real_distribution<float> mMassDistr{5000.f, 15000.f};
 
         sf::Font mDebugFont;
         sf::Text mDebugText;
