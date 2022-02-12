@@ -2,6 +2,7 @@
 
 #include "physics/PhysicsWorld.h"
 #include "physics/RKSolver.h"
+#include "physics/ExplEulerSolver.h"
 
 namespace slr {
     void PhysicsWorld::CreateObject(ObjectPtr object) {
@@ -39,15 +40,13 @@ namespace slr {
         for (auto& obj: mObjects) {
             const auto netForce = GetNetForce(obj);
             std::array<float, 4> init = {obj->GetPosition().x, obj->GetVelocity().x, obj->GetPosition().y, obj->GetVelocity().y};
+
             auto dxdy = [&](auto init){ return std::array<float, 4>{init[1], netForce.x / obj->GetMass(), init[3], netForce.y / obj->GetMass()};};
 
-            const auto res =  RKSolver<2, decltype(dxdy)>::Solve(init, dt, dxdy);
+            const auto res =  ExplEulerSolver<2>::Solve(init, dt, dxdy);
 
             obj->SetVelocity(Vec3f{ res[1], res[3], 0});
             obj->SetPosition(Vec3f{ res[0], res[2], 0});
-
-            obj->SetVelocity(obj->GetVelocity() + obj->GetForce() / obj->GetMass() * dt);
-            obj->SetPosition(obj->GetPosition() + obj->GetVelocity() * dt);
 
             obj->SetForce(Vec3f());
         }

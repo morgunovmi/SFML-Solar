@@ -6,6 +6,7 @@
 
 #include "math/math.h"
 #include "Object.h"
+#include "Solver.h"
 
 namespace slr {
     using ObjectPtr = std::unique_ptr<Object>;

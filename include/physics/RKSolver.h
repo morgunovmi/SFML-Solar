@@ -4,12 +4,12 @@
 #include <array>
 #include <algorithm>
 
-template<int Dim, typename Func>
-class RKSolver {
-public:
-    RKSolver() = default;
+#include "Solver.h"
 
-    static std::array<float, Dim * 2> Solve(const std::array<float, Dim * 2>& init, float dt, Func rhsFunc) {
+template<int Dim>
+class RKSolver : public Solver<Dim> {
+public:
+    static constexpr stateArray<Dim> Solve(const stateArray<Dim>& init, float dt, auto rhsFunc)  {
         std::array<std::array<float, Dim * 2>, 4> koeffs{};
 
         koeffs[0] = rhsFunc(init);

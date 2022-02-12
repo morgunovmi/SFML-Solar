@@ -10,6 +10,7 @@
 
 #include "physics/PhysicsWorld.h"
 #include "frontend/SolarView.h"
+#include "physics/RKSolver.h"
 
 namespace slr {
     class Solar {
