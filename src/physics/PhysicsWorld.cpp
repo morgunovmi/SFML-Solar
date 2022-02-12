@@ -43,7 +43,7 @@ namespace slr {
 
             auto dxdy = [&](auto init){ return std::array<float, 4>{init[1], netForce.x / obj->GetMass(), init[3], netForce.y / obj->GetMass()};};
 
-            const auto res =  ExplEulerSolver<2>::Solve(init, dt, dxdy);
+            const auto res =  RKSolver<2>::Solve(init, dt, dxdy);
 
             obj->SetVelocity(Vec3f{ res[1], res[3], 0});
             obj->SetPosition(Vec3f{ res[0], res[2], 0});

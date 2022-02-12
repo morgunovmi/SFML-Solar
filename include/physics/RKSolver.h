@@ -12,26 +12,27 @@ public:
     static constexpr stateArray<Dim> Solve(const stateArray<Dim>& init, float dt, auto rhsFunc)  {
         std::array<std::array<float, Dim * 2>, 4> koeffs{};
 
+        // k1
         koeffs[0] = rhsFunc(init);
 
+        // k2
         std::array<float, Dim * 2> init1{};
-        for (std::size_t i = 0; i < Dim * 2; i++) {
-            init1[i] = init[i] + dt / 2 * koeffs[0][i];
-        }
-        std::transform(init1.begin(), init1.end(), init1.begin(), [](float val){ return 2 * val; });
+        std::transform(begin(init), end(init), begin(koeffs[0]), begin(init1),
+                       [=](auto lhs, auto rhs){ return lhs + dt / 2 * rhs; });
         koeffs[1] = rhsFunc(init1);
+        std::transform(begin(koeffs[1]), end(koeffs[1]), begin(koeffs[1]), [](auto val){ return 2 * val; });
 
+        //k3
         std::array<float, Dim * 2> init2{};
-        for (std::size_t i = 0; i < Dim * 2; i++) {
-            init2[i] = init[i] + dt / 2 * koeffs[1][i];
-        }
-        std::transform(init2.begin(), init2.end(), init2.begin(), [](float val){ return 2 * val; });
+        std::transform(begin(init), end(init), begin(koeffs[1]), begin(init2),
+                       [=](auto lhs, auto rhs){ return lhs + dt / 2 * rhs; });
         koeffs[2] = rhsFunc(init2);
+        std::transform(begin(koeffs[2]), end(koeffs[2]), begin(koeffs[2]), [](auto val){ return 2 * val; });
 
+        //k4
         std::array<float, Dim * 2> init3{};
-        for (std::size_t i = 0; i < Dim * 2; i++) {
-            init2[i] = init[i] + dt * koeffs[1][i];
-        }
+        std::transform(begin(init), end(init), begin(koeffs[2]), begin(init3),
+                       [=](auto lhs, auto rhs){ return lhs + dt * rhs; });
         koeffs[3] = rhsFunc(init3);
 
         std::array<float, Dim * 2> ret{};
