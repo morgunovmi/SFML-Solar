@@ -26,12 +26,31 @@ namespace slr {
         mDebugText.setPosition(static_cast<float>(mWindowWidth) - 200.f, 10.f);
 
         mWindow.setFramerateLimit(60);
+        /*
         for (size_t i = 0; i < 10; i++) {
             mWorld.CreateObject(
                     std::make_unique<Object>(Vec3f(mPosDistr(mDre), mPosDistr(mDre), 0),
                                              Vec3f(mSpeedDistr(mDre), mSpeedDistr(mDre), 0),
                                              mMassDistr(mDre)));
         }
+         */
+
+        mWorld.CreateObject(
+                std::make_unique<Object>(Vec3f(0.f, 0, 0),
+                                         Vec3f(0, 0.f, 0),
+                                         500000.f)
+                );
+
+        mWorld.CreateObject(
+                std::make_unique<Object>(Vec3f(1000.f, 0, 0),
+                                         Vec3f(0, 1800.f, 0),
+                                         5000.f)
+        );
+        mWorld.CreateObject(
+                std::make_unique<Object>(Vec3f(-1000.f, 0, 0),
+                                         Vec3f(0, -1800.f, 0),
+                                         5000.f)
+        );
     }
 
     void Solar::Review() {

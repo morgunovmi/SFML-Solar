@@ -2,7 +2,7 @@
 #include "physics/SolverTest.h"
 
 int main() {
-    TestSolvers();
+    //TestSolvers();
 
     const auto width = 800;
     const auto height = 600;

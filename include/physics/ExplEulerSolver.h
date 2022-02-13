@@ -3,11 +3,20 @@
 
 #include "Solver.h"
 
+#include <fmt/format.h>
+
 template<int Dim>
 class ExplEulerSolver : public Solver<Dim> {
 public:
     [[nodiscard]] static constexpr stateArray<Dim> Solve(float t, const stateArray <Dim>& init, float dt, auto rhsFunc) {
         const auto k = rhsFunc(t, init);
+
+        /*
+        for (const auto val: k) {
+            fmt::print("{} ", val);
+        }
+        fmt::print("\n");
+         */
 
         stateArray<Dim> res{};
         std::transform(begin(init), end(init), begin(k), begin(res),
