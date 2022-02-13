@@ -26,6 +26,7 @@ namespace slr {
         mDebugText.setPosition(static_cast<float>(mWindowWidth) - 200.f, 10.f);
 
         mWindow.setFramerateLimit(60);
+
         /*
         for (size_t i = 0; i < 10; i++) {
             mWorld.CreateObject(

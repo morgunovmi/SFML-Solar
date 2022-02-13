@@ -11,7 +11,6 @@
 
 #include "physics/PhysicsWorld.h"
 #include "frontend/SolarView.h"
-#include "physics/RKSolver.h"
 
 namespace slr {
     class Solar {
@@ -50,7 +49,7 @@ namespace slr {
         std::random_device mRd;
         std::default_random_engine mDre{ mRd() };
         std::uniform_real_distribution<float> mPosDistr{-1000.f, 1000.f};
-        std::uniform_real_distribution<float> mSpeedDistr{-300.f, 300.f};
+        std::uniform_real_distribution<float> mSpeedDistr{-2500.f, 2500.f};
         std::uniform_real_distribution<float> mMassDistr{5000.f, 15000.f};
 
         sf::Font mDebugFont;

@@ -1,8 +1,6 @@
 #include <cmath>
 
 #include "physics/PhysicsWorld.h"
-#include "physics/RKSolver.h"
-#include "physics/ExplEulerSolver.h"
 
 namespace slr {
     void PhysicsWorld::CreateObject(ObjectPtr object) {
@@ -33,9 +31,9 @@ namespace slr {
 
     void PhysicsWorld::Step(float dt) {
         for (auto& obj: mObjects) {
-            obj->SetForce(GetNetForce(obj));
+            auto forceOld = GetNetForce(obj);
+            obj->SetForce(forceOld);
             obj->SetVelocity(obj->GetVelocity() + obj->GetForce() / obj->GetMass() * dt);
-            obj->SetForce(Vec3f());
         }
 
         for (auto& obj : mObjects) {
