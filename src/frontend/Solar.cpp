@@ -5,13 +5,17 @@
 
 #include "frontend/Solar.h"
 
+#include "imgui.h"
+#include "imgui-SFML.h"
+
 namespace slr {
     void Solar::Run() {
         while (mWindow.isOpen()) {
             Review();
-            Update();
+            Update(mDeltaClock.restart());
             Render();
         }
+        ImGui::SFML::Shutdown();
     }
 
     void Solar::Initialize() {
@@ -26,6 +30,8 @@ namespace slr {
         mDebugText.setPosition(static_cast<float>(mWindowWidth) - 200.f, 10.f);
 
         mWindow.setFramerateLimit(60);
+
+        ImGui::SFML::Init(mWindow);
 
         /*
         for (size_t i = 0; i < 10; i++) {
@@ -58,6 +64,8 @@ namespace slr {
         sf::Event event{};
 
         while (mWindow.pollEvent(event)) {
+            ImGui::SFML::ProcessEvent(event);
+
             switch (event.type) {
                 case sf::Event::Closed:
                     mWindow.close();
@@ -79,10 +87,11 @@ namespace slr {
         }
     }
 
-    void Solar::Update() {
-        mDeltaSeconds = mDeltaClock.restart().asSeconds();
-        mWorld.Step(mDeltaSeconds);
-        mView.Update(mDeltaSeconds);
+    void Solar::Update(sf::Time dt) {
+        const auto dtSeconds = dt.asSeconds();
+        mWorld.Step(dtSeconds);
+        mView.Update(dtSeconds);
+        ImGui::SFML::Update(mWindow, dt);
     }
 
     void Solar::Render() {
@@ -120,7 +129,34 @@ namespace slr {
         mDebugText.setString(fmt::format("fps: {:.3f}\nframetime: {:.3f}\n", 1.f / mDeltaSeconds, mDeltaSeconds));
         mWindow.draw(mDebugText);
 
+        char windowTitle[255] = "ImGui + SFML = <3";
+
+        ImGui::Begin("Sample window"); // begin window
+
+                                       // Background color edit
+                                       /*
+        if (ImGui::ColorEdit3("Background color", color)) {
+            // this code gets called if color value changes, so
+            // the background color is upgraded automatically!
+            bgColor.r = static_cast<sf::Uint8>(color[0] * 255.f);
+            bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
+            bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
+        }
+        */
+
+        // Window title text edit
+        ImGui::InputText("Window title", windowTitle, 255);
+
+        if (ImGui::Button("Update window title")) {
+            // this code gets if user clicks on the button
+            // yes, you could have written if(ImGui::InputText(...))
+            // but I do this to show how buttons work :)
+            mWindow.setTitle(windowTitle);
+        }
+        ImGui::End(); // end window
+
         mWindow.setView(mView);
+        ImGui::SFML::Render(mWindow);
         mWindow.display();
     }
 }

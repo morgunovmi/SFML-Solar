@@ -32,7 +32,7 @@ namespace slr {
 
         void Review();
 
-        void Update();
+        void Update(sf::Time dt);
 
         void Render();
 
