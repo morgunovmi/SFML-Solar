@@ -5,22 +5,24 @@
 #include <unordered_set>
 
 #include "math/math.h"
-#include "Object.h"
+#include "PhysicsObject.h"
 
 namespace slr {
-    using ObjectPtr = std::unique_ptr<Object>;
+    using ObjectPtr = std::shared_ptr<PhysicsObject>;
+
+    const float DEFAULT_GRAV_CONST = 1e4f;
 
     class PhysicsWorld {
     public:
-        explicit PhysicsWorld(const Vec3f& gravity) : mObjects(), mGravity(gravity) {}
+        explicit PhysicsWorld(float gravConst = DEFAULT_GRAV_CONST) : mObjects(), mGravConst(gravConst) {}
 
         void CreateObject(ObjectPtr object);
 
         void DeleteObject(ObjectPtr object);
 
-        [[nodiscard]] Vec3f GetGravity() const { return mGravity; }
+        [[nodiscard]] float GetGravConst() const { return mGravConst; }
 
-        void SetGravity(const Vec3f& vec) { mGravity = vec; }
+        void GetGravConst(float gravConst) { mGravConst = gravConst; }
 
         void Step(float dt);
 
@@ -28,9 +30,9 @@ namespace slr {
 
     private:
         std::unordered_set<ObjectPtr> mObjects;
-        Vec3f mGravity;
+        float                         mGravConst;
 
-        [[nodiscard]] Vec3f GetNetForce(const ObjectPtr& obj);
+        [[nodiscard]] Vec3f GetNetForce(ObjectPtr obj);
     };
 }
 

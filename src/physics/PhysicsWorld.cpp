@@ -17,7 +17,7 @@ namespace slr {
         return -gamma * m1 * m2 * (pos1 - pos2) / std::pow((pos1 - pos2).norm(), 3);
     }
 
-    Vec3f PhysicsWorld::GetNetForce(const ObjectPtr& obj) {
+    Vec3f PhysicsWorld::GetNetForce(ObjectPtr obj) {
         Vec3f netForce{};
         for (auto& obj1: mObjects) {
             if (obj != obj1) {

@@ -33,31 +33,15 @@ namespace slr {
 
         ImGui::SFML::Init(mWindow);
 
-        /*
-        for (size_t i = 0; i < 10; i++) {
-            mWorld.CreateObject(
-                    std::make_unique<Object>(Vec3f(mPosDistr(mDre), mPosDistr(mDre), 0),
-                                             Vec3f(mSpeedDistr(mDre), mSpeedDistr(mDre), 0),
-                                             mMassDistr(mDre)));
-        }
-         */
+        mPlanetsSheet.loadFromFile("../resources/images/planet.png");
 
-        mWorld.CreateObject(
-                std::make_unique<Object>(Vec3f(0.f, 0, 0),
-                                         Vec3f(0, 0.f, 0),
-                                         500000.f)
-                );
+        mEntityManager.CreateEntity(sf::Vector2f{0.f, 0.f},
+                                    sf::Vector2f{0.f, 0.f},
+                                    500000.f, mPlanetsSheet);
 
-        mWorld.CreateObject(
-                std::make_unique<Object>(Vec3f(1000.f, 0, 0),
-                                         Vec3f(0, 1800.f, 0),
-                                         5000.f)
-        );
-        mWorld.CreateObject(
-                std::make_unique<Object>(Vec3f(-1000.f, 0, 0),
-                                         Vec3f(0, -1800.f, 0),
-                                         5000.f)
-        );
+        mEntityManager.CreateEntity(sf::Vector2f{10000.f, 0.f},
+                                    sf::Vector2f{0.f, 500.f},
+                                    5000.f, mPlanetsSheet);
     }
 
     void Solar::Review() {
@@ -89,42 +73,33 @@ namespace slr {
 
     void Solar::Update(sf::Time dt) {
         const auto dtSeconds = dt.asSeconds();
-        mWorld.Step(dtSeconds);
+        mEntityManager.Update(dtSeconds);
         mView.Update(dtSeconds);
         ImGui::SFML::Update(mWindow, dt);
     }
 
     void Solar::Render() {
-        mWindow.clear(sf::Color::White);
+        mWindow.clear(sf::Color::Black);
 
+        /*
         sf::CircleShape sun{100.f, 100};
         sun.setOrigin(sun.getRadius(), sun.getRadius());
         sun.setPosition(0.f, 0.f);
         sun.setFillColor(sf::Color::Yellow);
         mWindow.draw(sun);
+         */
 
-        for (auto& obj: mWorld.GetObjects()) {
-            sf::CircleShape c{100.f, 100};
-            c.setOrigin(c.getRadius(), c.getRadius());
-            c.setPosition(sf::Vector2f{obj->GetPosition().x, obj->GetPosition().y});
-            c.setFillColor(sf::Color::Red);
+        /*
+        sf::Image img{};
+        img.loadFromFile("../resources/images/planet.png");
+        sf::Texture tex{};
+        tex.loadFromImage(img);
+        sf::Sprite sprite(tex);
+        mWindow.draw(sprite);
+         */
 
-            mWindow.draw(c);
+        mEntityManager.Draw(mWindow);
 
-            const auto bbox = c.getGlobalBounds();
-            sf::RectangleShape brect;
-            brect.setPosition(sf::Vector2f{bbox.left, bbox.top});
-            brect.setSize(sf::Vector2f{bbox.width, bbox.height});
-            brect.setFillColor(sf::Color::Transparent);
-            brect.setOutlineThickness(3.f);
-            brect.setOutlineColor(sf::Color::Red);
-            mWindow.draw(brect);
-
-            mTrailsPoints.push_back(sf::Vertex{sf::Vector2f{
-                    obj->GetPosition().x, obj->GetPosition().y}, sf::Color::Red});
-        }
-
-        mWindow.draw(&mTrailsPoints[0], mTrailsPoints.size(), sf::Points);
 
         mDebugText.setString(fmt::format("fps: {:.3f}\nframetime: {:.3f}\n", 1.f / mDeltaSeconds, mDeltaSeconds));
         mWindow.draw(mDebugText);
@@ -145,6 +120,8 @@ namespace slr {
         */
 
         // Window title text edit
+        ImGui::ShowDemoWindow();
+
         ImGui::InputText("Window title", windowTitle, 255);
 
         if (ImGui::Button("Update window title")) {

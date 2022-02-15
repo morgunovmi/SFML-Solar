@@ -4,9 +4,9 @@
 #include "math/math.h"
 
 namespace slr {
-    class Object {
+    class PhysicsObject {
     public:
-        Object(const Vec3f& pos, const Vec3f& vel, float mass) :
+        PhysicsObject(const Vec3f& pos, const Vec3f& vel, float mass) :
                 mPosition(pos), mVelocity(vel), mForce(Vec3f()), mMass(mass) {}
 
         [[nodiscard]] Vec3f GetPosition() const { return mPosition; }

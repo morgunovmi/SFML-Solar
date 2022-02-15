@@ -9,8 +9,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 
-#include "physics/PhysicsWorld.h"
 #include "frontend/SolarView.h"
+#include "entities/EntityManager.h"
 
 namespace slr {
     class Solar {
@@ -20,8 +20,8 @@ namespace slr {
                 mWindow(sf::VideoMode{width, height}, "Solar System", sf::Style::Close,
                         sf::ContextSettings(0, 0, 8, 2, 0)),
                 mView(width, height),
-                mDeltaClock(), mDeltaSeconds(), mWorld(Vec3f{0, 98.1f, 0}),
-                mTrailsPoints(), mDebugFont(), mDebugText() {
+                mDeltaClock(), mDeltaSeconds(),
+                mEntityManager(), mDebugFont(), mDebugText() {
             Initialize();
         }
 
@@ -43,8 +43,9 @@ namespace slr {
         sf::Clock mDeltaClock;
         float mDeltaSeconds;
 
-        PhysicsWorld mWorld;
-        std::vector<sf::Vertex> mTrailsPoints;
+        EntityManager mEntityManager;
+
+        sf::Texture   mPlanetsSheet;
 
         std::random_device mRd;
         std::default_random_engine mDre{ mRd() };
