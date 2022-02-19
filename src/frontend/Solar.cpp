@@ -1,8 +1,6 @@
 #include <string>
 #include <fmt/format.h>
 
-#include <SFML/Graphics/RectangleShape.hpp>
-
 #include "frontend/Solar.h"
 
 #include "imgui.h"
@@ -36,12 +34,16 @@ namespace slr {
         mPlanetsSheet.loadFromFile("../resources/images/planet.png");
 
         mEntityManager.CreateEntity(sf::Vector2f{0.f, 0.f},
-                                    sf::Vector2f{0.f, 0.f},
-                                    500000.f, mPlanetsSheet);
+                                    sf::Vector2f{-932.f, -864.f},
+                                    65000.f, mPlanetsSheet);
 
-        mEntityManager.CreateEntity(sf::Vector2f{10000.f, 0.f},
-                                    sf::Vector2f{0.f, 500.f},
-                                    5000.f, mPlanetsSheet);
+        mEntityManager.CreateEntity(sf::Vector2f{970.f, -243.f},
+                                    sf::Vector2f{466.f, 432.f},
+                                    65000.f, mPlanetsSheet);
+
+        mEntityManager.CreateEntity(sf::Vector2f{-970.f, 243.f},
+                                    sf::Vector2f{466.f, 432.f},
+                                    65000.f, mPlanetsSheet);
     }
 
     void Solar::Review() {
@@ -106,10 +108,11 @@ namespace slr {
 
         char windowTitle[255] = "ImGui + SFML = <3";
 
+
+        /*
         ImGui::Begin("Sample window"); // begin window
 
                                        // Background color edit
-                                       /*
         if (ImGui::ColorEdit3("Background color", color)) {
             // this code gets called if color value changes, so
             // the background color is upgraded automatically!
@@ -117,7 +120,6 @@ namespace slr {
             bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
             bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
         }
-        */
 
         // Window title text edit
         ImGui::ShowDemoWindow();
@@ -130,7 +132,8 @@ namespace slr {
             // but I do this to show how buttons work :)
             mWindow.setTitle(windowTitle);
         }
-        ImGui::End(); // end window
+        */
+//        ImGui::End(); // end window
 
         mWindow.setView(mView);
         ImGui::SFML::Render(mWindow);
