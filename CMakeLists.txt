@@ -27,7 +27,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_GENERATOR_P
 
 project(Solar VERSION 1.0)
 
-find_package(OpenGL)
+find_package(OpenGL REQUIRED)
 
 include(FetchContent)
 
@@ -57,8 +57,9 @@ set(IMGUI_SFML_DIR ${CMAKE_BINARY_DIR}/_deps/imgui-sfml)
 
 execute_process(
     COMMAND git clone https://github.com/eliasdaler/imgui-sfml ${IMGUI_SFML_DIR} 
+)
+execute_process(
     COMMAND cat ${IMGUI_SFML_DIR}/imgconfig-SFML.h >> ${imgui_SOURCE_DIR}/imconfig.h
-    COMMAND_ECHO STDOUT
     ) 
 
 file(GLOB IMGUI_SOURCES ${imgui_SOURCE_DIR}/*.cpp)
@@ -71,7 +72,7 @@ set(SFML_LIBS sfml-graphics sfml-system sfml-window)
 if(WIN32 OR WIN64)
     target_link_libraries(${PROJECT_NAME} ${SFML_LIBS}
         fmt::fmt
-        OpenGL::OpenGL
+        opengl32
         )
 else()
     target_link_libraries(${PROJECT_NAME} ${SFML_LIBS}
@@ -83,17 +84,8 @@ endif()
 target_include_directories(${PROJECT_NAME} PRIVATE
     "include"
     "dependencies"
+    ${imgui_SOURCE_DIR}
     ${IMGUI_SFML_DIR} 
     ) 
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    foreach(lib_sfml sfml-graphics sfml-system sfml-window)
-        get_target_property(lib_path_sfml ${lib_sfml} LOCATION)
-        file(COPY ${lib_path_sfml} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-    endforeach()
-
-    get_target_property(lib_path_imgui ImGui-SFML::ImGui-SFML LOCATION)
-    file(COPY ${lib_path_imgui} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-endif()
 
 file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
