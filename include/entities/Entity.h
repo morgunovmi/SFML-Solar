@@ -18,8 +18,8 @@ namespace slr {
             setTexture(texture);
             setPosition(pos);
             const auto rect = getTextureRect();
-            setOrigin(static_cast<float>(rect.width) / 2,
-                      static_cast<float>(rect.height) / 2);
+            setOrigin(sf::Vector2f{static_cast<float>(rect.width) / 2,
+                      static_cast<float>(rect.height) / 2});
         }
 
         void Simulate(float seconds);

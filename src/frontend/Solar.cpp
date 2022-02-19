@@ -17,7 +17,7 @@ namespace slr {
     }
 
     void Solar::Initialize() {
-        const std::string fontPath{"../resources/fonts/arvo.ttf"};
+        const std::string fontPath{"./resources/fonts/arvo.ttf"};
 
         mDebugFont.loadFromFile(fontPath);
 
@@ -25,13 +25,13 @@ namespace slr {
         mDebugText.setCharacterSize(20U);
         mDebugText.setFillColor(sf::Color::Red);
 
-        mDebugText.setPosition(static_cast<float>(mWindowWidth) - 200.f, 10.f);
+        mDebugText.setPosition(sf::Vector2f{static_cast<float>(mWindowWidth) - 200.f, 10.f});
 
         mWindow.setFramerateLimit(60);
 
         ImGui::SFML::Init(mWindow);
 
-        mPlanetsSheet.loadFromFile("../resources/images/planet.png");
+        mPlanetsSheet.loadFromFile("./resources/images/planet.png");
 
         mEntityManager.CreateEntity(sf::Vector2f{0.f, 0.f},
                                     sf::Vector2f{-932.f, -864.f},
@@ -109,9 +109,12 @@ namespace slr {
         char windowTitle[255] = "ImGui + SFML = <3";
 
 
-        /*
+        
         ImGui::Begin("Sample window"); // begin window
 
+        float color[3] = {0.f, 0.f, 0.f};
+
+        sf::Color bgColor{};
                                        // Background color edit
         if (ImGui::ColorEdit3("Background color", color)) {
             // this code gets called if color value changes, so
@@ -132,8 +135,8 @@ namespace slr {
             // but I do this to show how buttons work :)
             mWindow.setTitle(windowTitle);
         }
-        */
-//        ImGui::End(); // end window
+        
+        ImGui::End(); // end window
 
         mWindow.setView(mView);
         ImGui::SFML::Render(mWindow);

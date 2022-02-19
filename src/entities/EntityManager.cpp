@@ -24,7 +24,7 @@ namespace slr {
         mPhysicsWorld.Step(dt);
         for (auto& ent : mEntities) {
             const auto newPos = ent->GetPhysicsObject()->GetPosition();
-            ent->setPosition(newPos.x, newPos.y);
+            ent->setPosition(sf::Vector2f{newPos.x, newPos.y});
 
             ent->AddTrailPoint(sf::Vertex{sf::Vector2f{newPos.x, newPos.y}});
         }

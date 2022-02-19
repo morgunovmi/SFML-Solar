@@ -2,6 +2,7 @@
 #define SOLAR_SOLARVIEW_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 
 namespace slr {
     const float VIEW_ACCEL_AMOUNT = 25.f;
@@ -12,7 +13,12 @@ namespace slr {
     class SolarView : public sf::View {
     public:
         SolarView(float width, float height) :
-                sf::View(sf::FloatRect{0, 0, width, height}),
+                //sf::View(sf::FloatRect(static_cast<float>(0), static_cast<float>(0), width, height)),
+                sf::View(sf::FloatRect(
+                            sf::Vector2f{0, 0},
+                            sf::Vector2f{width, height}
+                            )
+                        ),
                 mMoveVelocity(), mZoomSpeed(), mZoomLevel(1.f) {}
 
         void Update(float dt);
