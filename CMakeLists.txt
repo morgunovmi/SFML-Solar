@@ -70,15 +70,19 @@ add_subdirectory(src include)
 set(SFML_LIBS sfml-graphics sfml-system sfml-window)
 
 if(WIN32 OR WIN64)
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBS}
-        fmt::fmt
-        opengl32
+    target_link_libraries(${PROJECT_NAME} 
+        PUBLIC ${SFML_LIBS}
+        PRIVATE fmt::fmt
+        PRIVATE opengl32
         )
 else()
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBS}
-        fmt::fmt
-        OpenGL::OpenGL
-        pthread)
+    target_link_libraries(${PROJECT_NAME}
+        PUBLIC ${SFML_LIBS}
+        PRIVATE fmt::fmt
+        PRIVATE OpenGL::OpenGL
+        PRIVATE 
+        pthread
+        )
 endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE
