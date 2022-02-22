@@ -1,10 +1,14 @@
-#include "frontend/Solar.h"
+#include "frontend/App.h"
 
 int main() {
     const auto width = 800;
     const auto height = 600;
 
-    slr::Solar system{ width, height };
+    sf::ContextSettings settings{};
+    settings.antialiasingLevel = 8;
+
+    slr::App system{ width, height, settings };
+    system.Init();
     system.Run();
 
     return EXIT_SUCCESS;

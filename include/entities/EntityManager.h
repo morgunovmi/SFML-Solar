@@ -6,14 +6,15 @@
 
 #include "Entity.h"
 #include "physics/PhysicsWorld.h"
+#include "frontend/RendererEnums.h"
 
 namespace slr {
     class EntityManager {
     public:
-        EntityManager() : mEntities(), mPhysicsWorld() {}
+        explicit EntityManager(std::array<sf::Texture, 1>& textures) : mEntities(), mTextures(textures), mPhysicsWorld() {}
 
         void CreateEntity(const sf::Vector2f& pos,
-                          const sf::Vector2f& vel, float mass, const sf::Texture& texture);
+                          const sf::Vector2f& vel, float mass, TextureName textureName);
 
         void DestroyEntity(std::shared_ptr<Entity> entity);
 
@@ -23,6 +24,8 @@ namespace slr {
 
     private:
         std::unordered_set<std::shared_ptr<Entity>> mEntities;
+        std::array<sf::Texture, 1>&                 mTextures;
+
         PhysicsWorld                                mPhysicsWorld;
     };
 }

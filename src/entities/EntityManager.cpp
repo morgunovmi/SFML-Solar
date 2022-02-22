@@ -4,9 +4,10 @@
 
 namespace slr {
     void EntityManager::CreateEntity(const sf::Vector2f& pos,
-                                     const sf::Vector2f& vel, float mass, const sf::Texture& texture) {
+                                     const sf::Vector2f& vel, float mass, TextureName textureName) {
 
-        auto entity = std::make_shared<Entity>(pos, texture);
+        auto entity = std::make_shared<Entity>(pos, mTextures[textureName]);
+        fmt::print("Texture size {}\n", mTextures[textureName].getSize().x);
         auto physicsObject = std::make_shared<PhysicsObject>(Vec3f{pos.x, pos.y, 0},
                                                                    Vec3f{vel.x, vel.y, 0}, mass);
 
@@ -32,9 +33,10 @@ namespace slr {
 
     void EntityManager::Draw(sf::RenderWindow& window) const {
         for (auto& ent : mEntities) {
-            window.draw(*ent);
             auto trail = ent->GetTrail();
             window.draw(&trail[0], trail.size(), sf::Points);
+
+            window.draw(*ent);
         }
     }
 }

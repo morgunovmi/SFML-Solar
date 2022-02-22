@@ -78,8 +78,8 @@ else()
         PUBLIC ${SFML_LIBS}
         PRIVATE fmt::fmt
         PRIVATE OpenGL::OpenGL
-        PRIVATE 
-        pthread
+        PRIVATE pthread
+        PRIVATE X11
         )
 endif()
 

@@ -4,7 +4,7 @@
 
 namespace slr {
     void PhysicsWorld::CreateObject(ObjectPtr object) {
-        mObjects.insert(std::move(object));
+        mObjects.insert(object);
     }
 
     void PhysicsWorld::DeleteObject(ObjectPtr object) {

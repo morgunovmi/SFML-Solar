@@ -1,5 +1,6 @@
 target_sources(Solar PRIVATE
+        App.cpp
         main.cpp
-        Solar.cpp
+        Renderer.cpp
         SolarView.cpp
     )
