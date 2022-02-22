@@ -25,7 +25,17 @@ namespace slr {
                                                         obj->GetPosition(), obj1->GetPosition());
             }
         }
+        return netForce;
+    }
 
+    Vec3f PhysicsWorld::GetNetForce(ObjectPtr obj, std::size_t i) {
+        Vec3f netForce{};
+        for (auto& obj1: mObjects) {
+            if (obj != obj1) {
+                netForce = netForce + GetNBodyGravForce(obj->GetMass(), obj1->GetMass(),
+                                                        obj->GetSimulatedPos()[i], obj1->GetSimulatedPos()[i]);
+            }
+        }
         return netForce;
     }
 
@@ -52,7 +62,7 @@ namespace slr {
 
         for (std::size_t i = 0; i < N - 1; ++i) {
             for (auto& obj: mObjects) {
-                obj->SetForce(GetNetForce(obj));
+                obj->SetForce(GetNetForce(obj, i));
                 obj->GetSimulatedVel()[i + 1] = obj->GetSimulatedVel()[i] + obj->GetForce() / obj->GetMass() * dt;
             }
 
