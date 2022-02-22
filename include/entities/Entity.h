@@ -22,15 +22,18 @@ namespace slr {
                       static_cast<float>(rect.height) / 2});
         }
 
-        void Simulate(float seconds);
-
         [[nodiscard]] std::shared_ptr<PhysicsObject> GetPhysicsObject() const { return mPhysicsObject; }
         void SetPhycicsObject(std::shared_ptr<PhysicsObject> physicsObject) { mPhysicsObject = physicsObject; }
 
-        [[nodiscard]] std::vector<sf::Vertex> GetTrail() const { return mTrail; }
+        [[nodiscard]] std::vector<sf::Vertex>& GetTrail() { return mTrail; }
+        [[nodiscard]] std::vector<sf::Vertex>& GetSimulatedTrail() { return mSimulatedTrail; }
 
         void AddTrailPoint(const sf::Vertex& vertex) {
             mTrail.push_back(vertex);
+        }
+
+        void AddSimulatedTrailPoint(const sf::Vertex& vertex) {
+            mSimulatedTrail.push_back(vertex);
         }
 
         [[nodiscard]] bool GetDebug() const { return mDebug; }
@@ -39,6 +42,7 @@ namespace slr {
     private:
         std::shared_ptr<PhysicsObject> mPhysicsObject;
         std::vector<sf::Vertex> mTrail;
+        std::vector<sf::Vertex> mSimulatedTrail;
 
         bool mDebug;
     };
