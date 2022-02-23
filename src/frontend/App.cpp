@@ -1,4 +1,5 @@
 #include "frontend/App.h"
+#include "misc/Log.h"
 
 #include "imgui-SFML.h"
 
