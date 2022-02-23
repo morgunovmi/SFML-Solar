@@ -13,6 +13,23 @@ namespace slr {
 
         while (mWindow.pollEvent(event)) {
             ImGui::SFML::ProcessEvent(event);
+
+            switch (event.type) {
+                case sf::Event::KeyPressed:
+                    switch (event.key.code) {
+                        case sf::Keyboard::LAlt:
+                            mShowMainMenuBar = !mShowMainMenuBar;
+                            break;
+                        case sf::Keyboard::F1:
+                            mShowFrameInfoOverlay = !mShowFrameInfoOverlay;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -21,36 +38,62 @@ namespace slr {
         ImGui::SFML::Update(mWindow, mDt);
     }
 
-    void GUI::Render() {
-        char windowTitle[255] = "ImGui + SFML = <3";
-
-        ImGui::Begin("Sample window"); // begin window
-
-        float color[3] = {0.f, 0.f, 0.f};
-
-        sf::Color bgColor{};
-        // Background color edit
-        if (ImGui::ColorEdit3("Background color", color)) {
-            // this code gets called if color value changes, so
-            // the background color is upgraded automatically!
-            bgColor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-            bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-            bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
+    void GUI::ShowFrameInfoOverlay() {
+        static int corner = 1;
+        ImGuiIO& io = ImGui::GetIO();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+        if (corner != -1)
+        {
+            const float PAD = 10.0f;
+            const ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+            ImVec2 work_size = viewport->WorkSize;
+            ImVec2 window_pos, window_pos_pivot;
+            window_pos.x = (corner & 1) ? (work_pos.x + work_size.x - PAD) : (work_pos.x + PAD);
+            window_pos.y = (corner & 2) ? (work_pos.y + work_size.y - PAD) : (work_pos.y + PAD);
+            window_pos_pivot.x = (corner & 1) ? 1.0f : 0.0f;
+            window_pos_pivot.y = (corner & 2) ? 1.0f : 0.0f;
+            ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+            window_flags |= ImGuiWindowFlags_NoMove;
         }
+        ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+        if (ImGui::Begin("FrameInfoOverlay", &mShowFrameInfoOverlay, window_flags))
+        {
+            ImGui::Text("Frame info");
+            ImGui::Separator();
+            ImGui::Text("Frametime: %d ms\nFPS: %.3f", mDt.asMilliseconds(), 1.f / mDt.asSeconds());
+            if (ImGui::BeginPopupContextWindow())
+            {
+                if (ImGui::MenuItem("Custom",       nullptr, corner == -1)) corner = -1;
+                if (ImGui::MenuItem("Top-left",     nullptr, corner == 0)) corner = 0;
+                if (ImGui::MenuItem("Top-right",    nullptr, corner == 1)) corner = 1;
+                if (ImGui::MenuItem("Bottom-left",  nullptr, corner == 2)) corner = 2;
+                if (ImGui::MenuItem("Bottom-right", nullptr, corner == 3)) corner = 3;
+                if (ImGui::MenuItem("Close")) mShowFrameInfoOverlay = false;
+                ImGui::EndPopup();
+            }
+        }
+        ImGui::End();
+    }
+
+    void GUI::ShowMainMenuBar() {
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("Windows"))
+            {
+                if (ImGui::MenuItem("Frame Info", "F1", &mShowFrameInfoOverlay)) {}
+                ImGui::EndMenu();
+            }
+            ImGui::EndMainMenuBar();
+        }
+    }
+
+    void GUI::Render() {
+        if (mShowMainMenuBar) ShowMainMenuBar();
+        if (mShowFrameInfoOverlay) ShowFrameInfoOverlay();
 
         // Window title text edit
         ImGui::ShowDemoWindow();
-
-        ImGui::InputText("Window title", windowTitle, 255);
-
-        if (ImGui::Button("Update window title")) {
-            // this code gets if user clicks on the button
-            // yes, you could have written if(ImGui::InputText(...))
-            // but I do this to show how buttons work :)
-            mWindow.setTitle(windowTitle);
-        }
-
-        ImGui::End(); // end window
 
         ImGui::SFML::Render(mWindow);
     }

@@ -6,7 +6,8 @@
 namespace slr {
     class GUI {
     public:
-        GUI(sf::RenderWindow& window, sf::Time& dt) : mWindow(window), mDt(dt) {}
+        GUI(sf::RenderWindow& window, sf::Time& dt) : mWindow(window), mDt(dt),
+            mShowMainMenuBar(false), mShowFrameInfoOverlay(false) {}
 
         bool Init();
 
@@ -19,10 +20,15 @@ namespace slr {
     private:
         void PollEvents();
 
+        void ShowMainMenuBar();
+        void ShowFrameInfoOverlay();
+
     private:
         sf::RenderWindow&   mWindow;
-
         sf::Time&           mDt;
+
+        bool                mShowMainMenuBar;
+        bool                mShowFrameInfoOverlay;
     };
 }
 

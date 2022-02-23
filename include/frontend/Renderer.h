@@ -18,7 +18,7 @@ namespace slr {
                  std::array<sf::Font, 1>& fonts, std::array<sf::Texture, 1>& textures) :
                 mWindow(window), mView(static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)),
                 mDt(dt), mEntityManager(entityManager),
-                mFonts(fonts), mTextures(textures), mDebugText() {
+                mFonts(fonts), mTextures(textures) {
             Init();
         }
 
@@ -38,7 +38,6 @@ namespace slr {
         EntityManager&              mEntityManager;
         std::array<sf::Font, 1>&    mFonts;
         std::array<sf::Texture, 1>& mTextures;
-        sf::Text                    mDebugText;
     };
 }
 
