@@ -31,13 +31,15 @@ namespace slr {
         void SimulateNSeconds(float seconds, float dt);
 
     private:
-        std::unordered_set<ObjectPtr> mObjects;
-        float                         mGravConst;
-
         [[nodiscard]] Vec3f GetNetForce(ObjectPtr obj);
         [[nodiscard]] Vec3f GetNetForce(ObjectPtr obj, size_t i);
 
         [[nodiscard]] Vec3f GetNBodyGravForce(float m1, float m2, const Vec3f& pos1, const Vec3f& pos2);
+
+    private:
+        std::unordered_set<ObjectPtr> mObjects;
+        float                         mGravConst;
+
     };
 }
 

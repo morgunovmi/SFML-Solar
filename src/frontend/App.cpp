@@ -4,6 +4,11 @@
 
 namespace slr{
     void App::Init() {
+        const std::string fontPath{"./resources/fonts/arvo.ttf"};
+        sf::Font debugFont{};
+        debugFont.loadFromFile(fontPath);
+        mFonts[0] = debugFont;
+
         sf::Texture planets{};
         planets.loadFromFile("./resources/images/planet.png");
         mTextures[0] = planets;

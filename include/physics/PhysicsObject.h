@@ -27,13 +27,14 @@ namespace slr {
         [[nodiscard]] std::vector<Vec3f>& GetSimulatedVel() { return mSimulatedVel; }
 
     private:
-        Vec3f mPosition;
-        Vec3f mVelocity;
-        Vec3f mForce;
-        float mMass;
+        Vec3f               mPosition;
+        Vec3f               mVelocity;
+        Vec3f               mForce;
+        float               mMass;
 
-        std::vector<Vec3f> mSimulatedPos;
-        std::vector<Vec3f> mSimulatedVel;
+    private:
+        std::vector<Vec3f>  mSimulatedPos;
+        std::vector<Vec3f>  mSimulatedVel;
     };
 }
 

@@ -16,29 +16,31 @@ namespace slr {
                 mWindow(sf::VideoMode{width, height},
                         "Solar System", sf::Style::Close, settings),
                 mDeltaClock(), mDt(),
-                mRenderer(mWindow, mDt, mEntityManager, mTextures),
+                mRenderer(mWindow, mDt, mEntityManager, mFonts, mTextures),
                 mGame(mWindow, mDeltaClock, mDt, mEntityManager),
                 mGUI(mWindow, mDt),
-                mEntityManager(mTextures) {}
+                mEntityManager(mTextures),
+                mFonts(), mTextures() {}
 
         void Init();
         void Run();
 
     private:
-        uint16_t            mWindowWidth, mWindowHeight;
-        sf::ContextSettings mSettings;
+        uint16_t                        mWindowWidth, mWindowHeight;
+        sf::ContextSettings             mSettings;
 
-        sf::RenderWindow    mWindow;
+        sf::RenderWindow                mWindow;
 
-        sf::Clock           mDeltaClock;
-        sf::Time            mDt;
+        sf::Clock                       mDeltaClock;
+        sf::Time                        mDt;
 
-        Renderer            mRenderer;
-        Game                mGame;
-        GUI                 mGUI;
+        Renderer                        mRenderer;
+        Game                            mGame;
+        GUI                             mGUI;
 
-        EntityManager       mEntityManager;
-        std::array<sf::Texture, 1>  mTextures;
+        EntityManager                   mEntityManager;
+        std::array<sf::Font, 1>         mFonts;
+        std::array<sf::Texture, 1>      mTextures;
     };
 }
 

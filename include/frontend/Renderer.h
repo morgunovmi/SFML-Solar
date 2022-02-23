@@ -14,10 +14,11 @@
 namespace slr {
     class Renderer {
     public:
-        Renderer(sf::RenderWindow& window, sf::Time& dt, EntityManager& entityManager, std::array<sf::Texture, 1>& textures) :
+        Renderer(sf::RenderWindow& window, sf::Time& dt, EntityManager& entityManager,
+                 std::array<sf::Font, 1>& fonts, std::array<sf::Texture, 1>& textures) :
                 mWindow(window), mView(static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)),
                 mDt(dt), mEntityManager(entityManager),
-                mTextures(textures), mFonts(), mDebugText() {
+                mFonts(fonts), mTextures(textures), mDebugText() {
             Init();
         }
 
@@ -35,7 +36,7 @@ namespace slr {
         sf::Time&                   mDt;
 
         EntityManager&              mEntityManager;
-        std::array<sf::Font, 1>     mFonts;
+        std::array<sf::Font, 1>&    mFonts;
         std::array<sf::Texture, 1>& mTextures;
         sf::Text                    mDebugText;
     };

@@ -40,11 +40,11 @@ namespace slr {
         void SetDebug(bool val) { mDebug = val; }
 
     private:
-        std::shared_ptr<PhysicsObject> mPhysicsObject;
-        std::vector<sf::Vertex> mTrail;
-        std::vector<sf::Vertex> mSimulatedTrail;
+        std::shared_ptr<PhysicsObject>  mPhysicsObject;
+        std::vector<sf::Vertex>         mTrail;
+        std::vector<sf::Vertex>         mSimulatedTrail;
 
-        bool mDebug;
+        bool                            mDebug;
     };
 }
 

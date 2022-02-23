@@ -20,9 +20,9 @@ namespace slr {
         void PollEvents();
 
     private:
-        sf::RenderWindow& mWindow;
+        sf::RenderWindow&   mWindow;
 
-        sf::Time& mDt;
+        sf::Time&           mDt;
     };
 }
 

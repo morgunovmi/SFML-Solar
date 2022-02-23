@@ -13,7 +13,6 @@ namespace slr {
     class SolarView : public sf::View {
     public:
         SolarView(float width, float height) :
-                //sf::View(sf::FloatRect(static_cast<float>(0), static_cast<float>(0), width, height)),
                 sf::View(sf::FloatRect(
                             sf::Vector2f{0, 0},
                             sf::Vector2f{width, height}
@@ -48,9 +47,9 @@ namespace slr {
         }
 
     private:
-        sf::Vector2f mMoveVelocity;
-        float mZoomSpeed;
-        float mZoomLevel;
+        sf::Vector2f    mMoveVelocity;
+        float           mZoomSpeed;
+        float           mZoomLevel;
     };
 }
 

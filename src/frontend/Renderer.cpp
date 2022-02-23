@@ -5,10 +5,6 @@
 
 namespace slr {
     void Renderer::Init() {
-        const std::string fontPath{"./resources/fonts/arvo.ttf"};
-        sf::Font debugFont{};
-        debugFont.loadFromFile(fontPath);
-        mFonts[0] = debugFont;
 
         mDebugText.setFont(mFonts[0]);
         mDebugText.setCharacterSize(20U);
