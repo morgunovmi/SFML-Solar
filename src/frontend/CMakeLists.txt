@@ -3,4 +3,5 @@ target_sources(Solar PRIVATE
         main.cpp
         Renderer.cpp
         SolarView.cpp
+        GUI.cpp
     )

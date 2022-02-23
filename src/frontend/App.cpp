@@ -11,10 +11,14 @@ namespace slr{
 
     void App::Run() {
         mGame.Init();
+        mGUI.Init();
         while (mWindow.isOpen()) {
             mGame.Update();
+            mGUI.Update();
             mRenderer.Render();
+            mGUI.Render();
+            mRenderer.Display();
         }
-        ImGui::SFML::Shutdown();
+        mGUI.Shutdown();
     }
 }

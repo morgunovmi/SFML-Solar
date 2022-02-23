@@ -6,6 +6,7 @@
 #include "entities/EntityManager.h"
 #include "Renderer.h"
 #include "backend/Game.h"
+#include "frontend/GUI.h"
 
 namespace slr {
     class App {
@@ -17,6 +18,7 @@ namespace slr {
                 mDeltaClock(), mDt(),
                 mRenderer(mWindow, mDt, mEntityManager, mTextures),
                 mGame(mWindow, mDeltaClock, mDt, mEntityManager),
+                mGUI(mWindow, mDt),
                 mEntityManager(mTextures) {}
 
         void Init();
@@ -33,6 +35,7 @@ namespace slr {
 
         Renderer            mRenderer;
         Game                mGame;
+        GUI                 mGUI;
 
         EntityManager       mEntityManager;
         std::array<sf::Texture, 1>  mTextures;

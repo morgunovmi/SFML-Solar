@@ -23,6 +23,8 @@ namespace slr {
 
         void Render();
 
+        void Display();
+
     private:
         void Init();
 
