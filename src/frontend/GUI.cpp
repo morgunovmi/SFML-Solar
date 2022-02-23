@@ -36,6 +36,11 @@ namespace slr {
     void GUI::Update() {
         PollEvents();
         ImGui::SFML::Update(mWindow, mDt);
+
+        mFrameTimeQueue.push(mDt.asMicroseconds());
+        if (mFrameTimeQueue.size() > FRAME_QUEUE_SIZE) {
+            mFrameTimeQueue.pop();
+        }
     }
 
     void GUI::ShowFrameInfoOverlay() {
@@ -62,6 +67,9 @@ namespace slr {
             ImGui::Text("Frame info");
             ImGui::Separator();
             ImGui::Text("Frametime: %d ms\nFPS: %.3f", mDt.asMilliseconds(), 1.f / mDt.asSeconds());
+            ImGui::PlotLines("Frame Times", &mFrameTimeQueue.front(), static_cast<int>(mFrameTimeQueue.size()),
+                             0, nullptr, FLT_MAX, FLT_MAX, ImVec2{100, 40});
+
             if (ImGui::BeginPopupContextWindow())
             {
                 if (ImGui::MenuItem("Custom",       nullptr, corner == -1)) corner = -1;
@@ -92,7 +100,6 @@ namespace slr {
         if (mShowMainMenuBar) ShowMainMenuBar();
         if (mShowFrameInfoOverlay) ShowFrameInfoOverlay();
 
-        // Window title text edit
         ImGui::ShowDemoWindow();
 
         ImGui::SFML::Render(mWindow);
