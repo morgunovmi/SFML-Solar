@@ -5,8 +5,8 @@
 #include "imgui.h"
 
 namespace slr {
-    bool GUI::Init() {
-        return ImGui::SFML::Init(mWindow);
+    void GUI::Init() {
+        ImGui::SFML::Init(mWindow);
     }
 
     void GUI::PollEvents() {

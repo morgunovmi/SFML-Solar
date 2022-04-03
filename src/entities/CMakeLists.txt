@@ -1,3 +1,1 @@
-target_sources(Solar PRIVATE
-        EntityManager.cpp
-        )
+target_sources(${APP_NAME} PRIVATE EntityManager.cpp)

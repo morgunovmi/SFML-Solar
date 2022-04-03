@@ -1,3 +1,1 @@
-target_sources(Solar PRIVATE 
-    math.cpp
-    )
+target_sources(${APP_NAME} PRIVATE math.cpp)

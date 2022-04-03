@@ -1,3 +1,1 @@
-target_sources(Solar PRIVATE 
-    PhysicsWorld.cpp
-    )
+target_sources(${APP_NAME} PRIVATE PhysicsWorld.cpp)

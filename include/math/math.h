@@ -8,8 +8,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "fisqrt.h"
-
 namespace slr {
     float norm(const sf::Vector2f& vec);
 

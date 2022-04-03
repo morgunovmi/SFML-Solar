@@ -16,7 +16,7 @@ namespace slr {
             mFrameTimeQueue(), mAppLog(appLog),
             mShowMainMenuBar(false), mShowFrameInfoOverlay(false), mShowAppLog(true) {}
 
-        bool Init();
+        void Init();
 
         void Update();
 

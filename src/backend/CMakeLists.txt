@@ -1,3 +1,1 @@
-target_sources(
-        Solar PRIVATE Game.cpp
-)
+target_sources(${APP_NAME} PRIVATE Game.cpp)
