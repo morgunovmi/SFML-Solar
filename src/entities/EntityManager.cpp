@@ -1,12 +1,10 @@
 #include "entities/EntityManager.h"
 
-#include <fmt/format.h>
-
 namespace slr {
     void EntityManager::CreateEntity(const sf::Vector2f& pos,
-                                     const sf::Vector2f& vel, float mass, TextureName textureName) {
+                                     const sf::Vector2f& vel, float mass, const TextureName textureName) {
 
-        auto entity = std::make_shared<Entity>(pos, mTextures[textureName]);
+        auto entity = std::make_shared<Entity>(pos, mTextures.at(textureName));
         auto physicsObject = std::make_shared<PhysicsObject>(Vec3f{pos.x, pos.y, 0},
                                                                    Vec3f{vel.x, vel.y, 0}, mass);
 

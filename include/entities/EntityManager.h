@@ -2,6 +2,7 @@
 #define SOLAR_ENTITYMANAGER_H
 
 #include <unordered_set>
+#include <array>
 #include <memory>
 
 #include "Entity.h"

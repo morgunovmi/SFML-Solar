@@ -2,11 +2,11 @@
 #define SOLAR_RENDERERENUMS_H
 
 enum TextureName {
-    PLANET,
+    PLANET = 0,
 };
 
 enum FontName {
-    DEBUG,
+    DEBUG = 0,
 };
 
 #endif //SOLAR_RENDERERENUMS_H
