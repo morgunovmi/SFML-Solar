@@ -1,5 +1,5 @@
 {
     "name": "prime-app",
     "version": "0.0.1",
-    "dependencies": ["fmt", "sfml", "imgui", "imgui-sfml"]
+    "dependencies": ["fmt", "sfml", "imgui", "imgui-sfml", "spdlog"]
 }

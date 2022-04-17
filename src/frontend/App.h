@@ -12,17 +12,17 @@
 namespace slr {
     class App {
     public:
-        App(uint16_t width, uint16_t height, const sf::ContextSettings& settings) :
+        App(uint16_t width, uint16_t height, const sf::ContextSettings& settings, Log& log) :
                 mWindowWidth(width), mWindowHeight(height), mSettings(settings),
                 mWindow(sf::VideoMode{width, height},
                         "Solar System", sf::Style::Close, settings),
                 mDeltaClock(), mDt(),
-                mRenderer(mWindow, mDt, mEntityManager, mFonts, mTextures, mAppLog),
-                mGame(mWindow, mDeltaClock, mDt, mEntityManager, mAppLog),
-                mGUI(mWindow, mDt, mAppLog),
-                mEntityManager(mTextures, mAppLog),
-                mFonts(), mTextures(),
-                mAppLog() {}
+                mAppLog(log),
+                mRenderer(mWindow, mDt, mEntityManager, mFonts, mTextures),
+                mGame(mWindow, mDeltaClock, mDt, mEntityManager),
+                mGUI(mWindow, mDt, mAppLog), mEntityManager(mTextures),
+                mFonts(),
+                mTextures() {}
 
         void Init();
         void Run();
@@ -36,6 +36,9 @@ namespace slr {
         sf::Clock                       mDeltaClock;
         sf::Time                        mDt;
 
+        Log&                             mAppLog;
+
+
         Renderer                        mRenderer;
         Game                            mGame;
         GUI                             mGUI;
@@ -44,8 +47,6 @@ namespace slr {
         std::array<sf::Font, 1>         mFonts;
         std::array<sf::Texture, 1>      mTextures;
 
-        //TODO Make it global somehow
-        Log                             mAppLog;
     };
 }
 

@@ -5,21 +5,21 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
+#include <spdlog/spdlog.h>
 
 #include "frontend/SolarView.h"
 #include "entities/EntityManager.h"
 
 #include "RendererEnums.h"
-#include "misc/Log.h"
 
 namespace slr {
     class Renderer {
     public:
         Renderer(sf::RenderWindow& window, sf::Time& dt, EntityManager& entityManager,
-                 std::array<sf::Font, 1>& fonts, std::array<sf::Texture, 1>& textures, Log& appLog) :
+                 std::array<sf::Font, 1>& fonts, std::array<sf::Texture, 1>& textures) :
                 mWindow(window), mView(static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)),
                 mDt(dt), mEntityManager(entityManager),
-                mFonts(fonts), mTextures(textures), mAppLog(appLog) {
+                mFonts(fonts), mTextures(textures) {
             Init();
         }
 
@@ -39,8 +39,6 @@ namespace slr {
         EntityManager&              mEntityManager;
         std::array<sf::Font, 1>&    mFonts;
         std::array<sf::Texture, 1>& mTextures;
-
-        Log&                        mAppLog;
     };
 }
 

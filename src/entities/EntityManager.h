@@ -4,17 +4,18 @@
 #include <unordered_set>
 #include <array>
 #include <memory>
+#include <spdlog/spdlog.h>
 
 #include "Entity.h"
 #include "physics/PhysicsWorld.h"
 #include "frontend/RendererEnums.h"
-#include "misc/Log.h"
+
 
 namespace slr {
     class EntityManager {
     public:
-        explicit EntityManager(std::array<sf::Texture, 1>& textures, Log& appLog) : mEntities(), mTextures(textures),
-                                                                                mPhysicsWorld(), mAppLog(appLog) {}
+        explicit EntityManager(std::array<sf::Texture, 1>& textures) : mEntities(), mTextures(textures),
+                                                                                mPhysicsWorld() {}
 
         void CreateEntity(const sf::Vector2f& pos,
                           const sf::Vector2f& vel, float mass, TextureName textureName);
@@ -30,8 +31,6 @@ namespace slr {
         std::array<sf::Texture, 1>&                 mTextures;
 
         PhysicsWorld                                mPhysicsWorld;
-
-        Log&                                        mAppLog;
     };
 }
 

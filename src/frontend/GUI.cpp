@@ -1,3 +1,4 @@
+#include <spdlog/spdlog.h>
 #include "frontend/GUI.h"
 #include "misc/Log.h"
 
