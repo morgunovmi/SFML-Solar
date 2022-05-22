@@ -14,7 +14,7 @@ namespace slr {
     public:
         GUI(sf::RenderWindow& window, sf::Time& dt, Log& appLog) : mWindow(window), mDt(dt),
             mFrameTimeQueue(), mAppLog(appLog),
-            mShowMainMenuBar(false), mShowFrameInfoOverlay(false), mShowAppLog(true) {}
+            mShowMainMenuBar(false), mShowFrameInfoOverlay(false), mShowAppLog(false) {}
 
         void Init();
 

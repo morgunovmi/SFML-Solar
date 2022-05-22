@@ -20,7 +20,6 @@ namespace slr {
     }
 
     void Game::Update() {
-        mDt = mDeltaClock.restart();
         PollInput();
         mEntityManager.Update(mDt.asSeconds());
     }

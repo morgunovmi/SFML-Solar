@@ -119,7 +119,9 @@ namespace slr {
         if (mShowFrameInfoOverlay) ShowFrameInfoOverlay();
         if (mShowAppLog) ShowAppLog();
 
+#ifndef NDEBUG
         ImGui::ShowDemoWindow();
+#endif
 
         ImGui::SFML::Render(mWindow);
     }

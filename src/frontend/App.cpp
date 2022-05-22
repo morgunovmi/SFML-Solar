@@ -3,7 +3,7 @@
 
 #include "imgui-SFML.h"
 
-namespace slr{
+namespace slr {
     void App::Init() {
         const std::string fontPath{"./resources/fonts/arvo.ttf"};
         sf::Font debugFont{};
@@ -19,6 +19,7 @@ namespace slr{
         mGame.Init();
         mGUI.Init();
         while (mWindow.isOpen()) {
+            mDt = mDeltaClock.restart();
             mGame.Update();
             mGUI.Update();
             mRenderer.Render();
